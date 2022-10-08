@@ -36,7 +36,8 @@ dependencies {
 	modImplementation libs.quilted.fabric.api
 	// modImplementation libs.bundles.quilted.fabric.api // If you wish to use Fabric API's deprecated modules, you can replace the above line with this one
 
-	modImplementation 'software.bernie.geckolib:geckolib-quilt-1.18:3.0.28'
+	modImplementation 'software.bernie.geckolib:geckolib-quilt-1.19:3.1.22'
+	modImplementation 'org.quiltmc:qsl:3.0.0-beta.16+1.19.2'
 }
 
 processResources {
