@@ -1,0 +1,5 @@
+{
+  "szworkshop.verifyWorldChanges": "Changing this game rule may cause irreversible changes to your world, such as entities and items disappearing permanently. Please enable the game rule 'szwUnderstand' to change this game rule.",
+  "gamerule.szwUnderstand": "Allow SystemZee's Workshop features to be disabled, potentially making breaking changes to the world",
+  "gamerule.szwQuiver": "Enable the Quiver and all related features"
+}

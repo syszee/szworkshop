@@ -17,7 +17,7 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "com.example.szworkshop.SZWorkshop"
+			"init": "me.aurelium.szworkshop.SZWorkshop"
 		},
 		"depends": [
 			{
@@ -34,5 +34,5 @@
 			}
 		]
 	},
-	"mixin": "szworkshop.mixins.json"
+	"mixin": "szworkshop.mixin.json"
 }
