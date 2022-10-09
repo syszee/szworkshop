@@ -17,7 +17,8 @@
 		},
 		"intermediate_mappings": "net.fabricmc:intermediary",
 		"entrypoints": {
-			"init": "me.aurelium.szworkshop.SZWorkshop"
+			"init": "me.aurelium.szworkshop.SZWorkshop",
+			"client_init": "me.aurelium.szworkshop.client.SZWorkshopClient"
 		},
 		"depends": [
 			{

@@ -87,6 +87,101 @@
 					}
 				}
 			}
+		},
+		"animation.quiver.arrows_3": {
+			"loop": true,
+			"bones": {
+				"1": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"2": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"3": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"arrow_nose": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				}
+			}
+		},
+		"animation.quiver.arrows_2": {
+			"loop": true,
+			"bones": {
+				"1": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"2": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"3": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"animation.quiver.arrows_1": {
+			"loop": true,
+			"bones": {
+				"1": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"2": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"3": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"arrow_nose": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				}
+			}
+		},
+		"animation.quiver.arrows_0": {
+			"loop": true,
+			"bones": {
+				"1": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"2": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"3": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				},
+				"arrow_nose": {
+					"scale": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2
