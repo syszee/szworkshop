@@ -65,7 +65,7 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 	private final SimpleInventory inventory = new SimpleInventory(9);
 	private static final TrackedData<Integer> ARROWS = DataTracker.registerData(QuiverEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
-	protected QuiverEntity(EntityType<QuiverEntity> entityType, World world) {
+	public QuiverEntity(EntityType<QuiverEntity> entityType, World world) {
 		super(entityType, world);
 		inventory.addListener(inv -> this.dataTracker.set(ARROWS, countArrows()));
 	}
@@ -74,17 +74,24 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 
 	@Override
 	protected void mobTick() {
-		super.mobTick();
 		if(!world.getServer().getGameRules().getBoolean(SZWorkshop.quiverRule)) {
 			this.kill();
 		}
+		super.mobTick();
+	}
+
+	@Override
+	public void tickMovement() {
+
+		super.tickMovement();
 	}
 
 	@Override
 	public void onDeath(DamageSource source) {
-		for(int i=0; i < 200; i++) {
-			this.world.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5, this.getZ(), 0.0, 0.0, 0.0);
+		for(int i = 0; i < 40; ++i) {
+			this.world.addParticle(ParticleTypes.CAMPFIRE_SIGNAL_SMOKE, this.getParticleX(0.5), this.getRandomBodyY(), this.getParticleZ(0.5), 0.01-(getRandom().nextDouble()*0.02), 0.1+getRandom().nextDouble()*0.1, 0.01-(getRandom().nextDouble()*0.02));
 		}
+
 		// stole this from the ItemScatterer code
 		for(int i=0; i < 4; i++) {
 			PersistentProjectileEntity arrow = createRandomArrow(1f);
@@ -106,11 +113,17 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 				world.spawnEntity(arrow);
 			}
 		}
+
+		// Inventory pops out like when you break a chest
 		ItemScatterer.spawn(world, this, inventory);
+
+		super.onDeath(source);
 	}
 
 	@Override
 	public ActionResult interactAt(PlayerEntity player, Vec3d hitPos, Hand hand) {
+		// You can't actually know what player built a golem in the vanilla system.
+		// Rather than something stupid like mixing into the button press that places blocks, it just bonds with whoever interacts with it first.
 		if(!isTamed())
 			setOwner(player);
 
