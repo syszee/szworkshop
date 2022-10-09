@@ -4,7 +4,8 @@
   "package": "me.aurelium.szworkshop.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "CarvedPumpkinMixin"
+    "CarvedPumpkinMixin",
+    "EntityNavigationMixin"
   ],
   "client": [
   ],

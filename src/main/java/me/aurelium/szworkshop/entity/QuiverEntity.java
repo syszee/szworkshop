@@ -160,21 +160,22 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 	@Override
 	protected void initGoals() {
 		this.goalSelector.add(1, new SwimGoal(this));
-		this.goalSelector.add(2, new ProjectileAttackNoLookGoal(this, 1.25, 2, 20, 10.0F));
-		this.goalSelector.add(3, new FollowOwnerNoTeleportGoal(this, 1f, 5f, 2f));
-		this.goalSelector.add(10, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+		this.goalSelector.add(2, new ProjectileAttackNoLookGoal(this, 1.25, 0, 20, 10.0F));
+		this.goalSelector.add(3, new FollowOwnerNoTeleportGoal(this, 1f, 10f, 2f));
+		this.goalSelector.add(4, new WanderAroundFarGoal(this, 1.0));
+		this.goalSelector.add(5, new LookAroundGoal(this));
+		this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
 
 		this.targetSelector.add(1, new TrackOwnerAttackerGoal(this));
 		this.targetSelector.add(2, new RevengeGoal(this));
 		this.targetSelector.add(3, new AttackWithOwnerGoal(this));
-		this.targetSelector
-				.add(3, new TargetGoal<>(this, MobEntity.class, 5, false, false, entity -> entity instanceof Monster && !(entity instanceof CreeperEntity)));
+		this.targetSelector.add(4, new TargetGoal<>(this, MobEntity.class, 5, false, false, entity -> entity instanceof Monster && !(entity instanceof CreeperEntity)));
 	}
 
 	public static DefaultAttributeContainer.Builder createMobAttributes() {
 		return MobEntity.createMobAttributes()
 				.add(EntityAttributes.GENERIC_MAX_HEALTH, 50f)
-				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.2f);
+				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f);
 	}
 
 	@Override
@@ -426,7 +427,7 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 			LivingEntity livingEntity = this.mob.getTarget();
 			if (livingEntity != null && livingEntity.isAlive()) {
 				this.target = livingEntity;
-				return true;
+				return !(this.target.hurtTime > 0);
 			} else {
 				return false;
 			}
