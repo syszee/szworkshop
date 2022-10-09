@@ -1,11 +1,13 @@
 package me.aurelium.szworkshop.entity;
 
+import me.aurelium.szworkshop.SZWorkshop;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.ai.pathing.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -68,6 +70,9 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 	@Override
 	protected void mobTick() {
 		super.mobTick();
+		if(!world.getServer().getGameRules().getBoolean(SZWorkshop.quiverRule)) {
+			this.kill();
+		}
 	}
 
 	@Override
@@ -102,9 +107,9 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 	}
 
 	@Override
-	protected void onKilledBy(@Nullable LivingEntity adversary) {
-		for(int i=0; i < 20; i++) {
-			world.addParticle(ParticleTypes.LARGE_SMOKE, getX(), getY(), getZ(), 0f, 0f, 0f);
+	public void onDeath(DamageSource source) {
+		for(int i=0; i < 200; i++) {
+			this.world.addParticle(ParticleTypes.SMOKE, this.getX(), this.getY() + 0.5, this.getZ(), 0.0, 0.0, 0.0);
 		}
 		// stole this from the ItemScatterer code
 		for(int i=0; i < 4; i++) {
@@ -207,7 +212,11 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 
 		AnimationBuilder builder = new AnimationBuilder();
-		builder.addAnimation("animation.quiver.walk", true);
+		if(event.isMoving()) {
+			builder.addAnimation("animation.quiver.walk", true);
+		} else {
+			builder.addAnimation("animation.quiver.idle", true);
+		}
 
 		event.getController().setAnimation(builder);
 		return PlayState.CONTINUE;
