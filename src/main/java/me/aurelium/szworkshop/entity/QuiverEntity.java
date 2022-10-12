@@ -160,11 +160,11 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 	@Override
 	protected void initGoals() {
 		this.goalSelector.add(1, new SwimGoal(this));
-		this.goalSelector.add(2, new ProjectileAttackNoLookGoal(this, 1.25, 0, 20, 10.0F));
+		this.goalSelector.add(2, new QuiverProjectileAttackGoal(this, 1.25, 0, 20, 10.0F));
 		this.goalSelector.add(3, new FollowOwnerNoTeleportGoal(this, 1f, 10f, 2f));
 		this.goalSelector.add(4, new WanderAroundFarGoal(this, 1.0));
 		this.goalSelector.add(5, new LookAroundGoal(this));
-		this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
+		//this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
 
 		this.targetSelector.add(1, new TrackOwnerAttackerGoal(this));
 		this.targetSelector.add(2, new RevengeGoal(this));
@@ -270,9 +270,9 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 
 		AnimationBuilder builder = new AnimationBuilder();
 		if(event.isMoving()) {
-			builder.addAnimation("animation.quiver.walk", true);
+			builder.addAnimation("animation.quiver.walk_alt", true);
 		} else {
-			builder.addAnimation("animation.quiver.idle", true);
+			builder.addAnimation("animation.quiver.idle_alt", true);
 		}
 
 		event.getController().setAnimation(builder);
@@ -394,8 +394,8 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 	}
 
 	// Again, just the vanilla projectile attack goal without making the entity look at the target.
-	private static class ProjectileAttackNoLookGoal extends Goal {
-		private final MobEntity mob;
+	private static class QuiverProjectileAttackGoal extends Goal {
+		private final QuiverEntity mob;
 		private final RangedAttackMob owner;
 		@Nullable
 		private LivingEntity target;
@@ -407,12 +407,12 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 		private final float maxShootRange;
 		private final float squaredMaxShootRange;
 
-		public ProjectileAttackNoLookGoal(RangedAttackMob mob, double mobSpeed, int minIntervalTicks, int maxIntervalTicks, float maxShootRange) {
-			if (!(mob instanceof LivingEntity)) {
+		public QuiverProjectileAttackGoal(QuiverEntity mob, double mobSpeed, int minIntervalTicks, int maxIntervalTicks, float maxShootRange) {
+			if (mob == null) {
 				throw new IllegalArgumentException("ArrowAttackGoal requires Mob implements RangedAttackMob");
 			} else {
 				this.owner = mob;
-				this.mob = (MobEntity)mob;
+				this.mob = mob;
 				this.mobSpeed = mobSpeed;
 				this.minIntervalTicks = minIntervalTicks;
 				this.maxIntervalTicks = maxIntervalTicks;
@@ -425,6 +425,9 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 		@Override
 		public boolean canStart() {
 			LivingEntity livingEntity = this.mob.getTarget();
+			if(this.mob.dataTracker.get(QuiverEntity.ARROWS) == 0) { // stops it from staring at random mobs when it has no arrows
+				return false;
+			}
 			if (livingEntity != null && livingEntity.isAlive()) {
 				this.target = livingEntity;
 				return !(this.target.hurtTime > 0);

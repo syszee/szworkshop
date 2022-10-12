@@ -13,14 +13,14 @@
 			"bones": [
 				{
 					"name": "right_leg",
-					"pivot": [0, 0, 0],
+					"pivot": [0, 13, 0],
 					"cubes": [
 						{"origin": [-7, 0, -3], "size": [6, 6, 6], "uv": [0, 32]}
 					]
 				},
 				{
 					"name": "left_leg",
-					"pivot": [0, 0, 0],
+					"pivot": [0, 13, 0],
 					"cubes": [
 						{"origin": [1, 0, -3], "size": [6, 6, 6], "uv": [24, 32]}
 					]

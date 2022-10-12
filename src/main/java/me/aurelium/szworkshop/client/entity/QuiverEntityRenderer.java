@@ -15,6 +15,7 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 public class QuiverEntityRenderer extends GeoEntityRenderer<QuiverEntity> {
 	public QuiverEntityRenderer(EntityRendererFactory.Context ctx) {
 		super(ctx, new QuiverEntityModel());
+		this.shadowRadius = 0.6f;
 	}
 
 	@Override
