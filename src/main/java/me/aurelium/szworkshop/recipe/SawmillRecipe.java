@@ -15,6 +15,11 @@ public class SawmillRecipe extends CuttingRecipe {
 	}
 
 	@Override
+	public boolean isIgnoredInRecipeBook() {
+		return true;
+	}
+
+	@Override
 	public boolean matches(Inventory inventory, World world) {
 		return this.input.test(inventory.getStack(0));
 	}

@@ -3,5 +3,7 @@
   "gamerule.szwUnderstand": "Allow SystemZee's Workshop features to be disabled, potentially making breaking changes to the world",
   "gamerule.szwQuiver": "Enable the Quiver and all related features",
 
-  "entity.szworkshop.quiver": "Quiver"
+  "entity.szworkshop.quiver": "Quiver",
+
+  "container.szworkshop.saw_mill": "Sawmill"
 }

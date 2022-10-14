@@ -81,7 +81,7 @@ public class SawmillScreenHandler extends ScreenHandler {
 				context.run((world, pos) -> {
 					long l = world.getTime();
 					if (SawmillScreenHandler.this.lastTakeTime != l) {
-						world.playSound((PlayerEntity)null, pos, SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.BLOCKS, 1.0F, 1.0F);
+						world.playSound((PlayerEntity)null, pos, SoundEvents.UI_STONECUTTER_TAKE_RESULT, SoundCategory.BLOCKS, 1.0F, 1.0F);
 						SawmillScreenHandler.this.lastTakeTime = l;
 					}
 
