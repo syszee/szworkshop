@@ -1,5 +1,6 @@
 package me.aurelium.szworkshop.block;
 
+import me.aurelium.szworkshop.SZWorkshop;
 import me.aurelium.szworkshop.ui.screen.SawmillScreenHandler;
 import net.minecraft.block.*;
 import net.minecraft.entity.ai.pathing.NavigationType;
@@ -9,6 +10,7 @@ import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandlerContext;
 import net.minecraft.screen.SimpleNamedScreenHandlerFactory;
 import net.minecraft.screen.StonecutterScreenHandler;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.stat.Stats;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.DirectionProperty;
@@ -32,7 +34,7 @@ public class SawmillBlock extends Block {
 	protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 9.0, 0.0, 16.0, 10.0, 16.0);
 
 	public SawmillBlock() {
-		super(Settings.of(Material.WOOD).strength(1f).nonOpaque());
+		super(Settings.of(Material.WOOD).sounds(BlockSoundGroup.WOOD).strength(1f).nonOpaque());
 	}
 
 	public BlockState getPlacementState(ItemPlacementContext ctx) {
@@ -48,8 +50,12 @@ public class SawmillBlock extends Block {
 		if (world.isClient) {
 			return ActionResult.SUCCESS;
 		} else {
-			player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
-			player.incrementStat(Stats.INTERACT_WITH_STONECUTTER);
+			if(world.getServer().getGameRules().getBoolean(SZWorkshop.sawmillRule)) {
+				player.openHandledScreen(state.createScreenHandlerFactory(world, pos));
+				player.incrementStat(Stats.INTERACT_WITH_STONECUTTER);
+			} else {
+				player.sendMessage(Text.translatable("block.szworkshop.saw_mill.disabled"), true);
+			}
 			return ActionResult.CONSUME;
 		}
 	}

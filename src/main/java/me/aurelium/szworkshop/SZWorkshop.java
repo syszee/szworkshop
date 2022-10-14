@@ -22,6 +22,7 @@ public class SZWorkshop implements ModInitializer {
 	// Game rules, if there ends up being like 20 of these it'd be best to separate into a different file.
 	public static GameRules.Key<GameRules.BooleanRule> understandRule;
 	public static GameRules.Key<GameRules.BooleanRule> quiverRule;
+	public static GameRules.Key<GameRules.BooleanRule> sawmillRule;
 
 	private static void verifyWorldChanges(MinecraftServer server, GameRules.BooleanRule rule) {
 		if(!rule.get()) {
@@ -39,6 +40,7 @@ public class SZWorkshop implements ModInitializer {
 		understandRule = GameRuleRegistry.register("szwUnderstand", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(false));
 
 		quiverRule = GameRuleRegistry.register("szwQuiver", GameRules.Category.MOBS, GameRuleFactory.createBooleanRule(true, SZWorkshop::verifyWorldChanges));
+		sawmillRule = GameRuleRegistry.register("szwSawmill", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true, SZWorkshop::verifyWorldChanges));
 
 		SZBlocks.initialize();
 		SZEntities.initialize();

@@ -21,6 +21,7 @@ import net.minecraft.screen.slot.Slot;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -146,7 +147,7 @@ public class SawmillScreenHandler extends ScreenHandler {
 
 	}
 
-	private void updateInput(Inventory input, ItemStack stack) {
+	private void updateInput(Inventory input, @NotNull ItemStack stack) {
 		this.availableRecipes.clear();
 		this.selectedRecipe.set(-1);
 		this.outputSlot.setStack(ItemStack.EMPTY);

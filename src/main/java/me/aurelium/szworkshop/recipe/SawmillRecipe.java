@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 public class SawmillRecipe extends CuttingRecipe {
 	public SawmillRecipe(Identifier id, String group, Ingredient input, ItemStack output) {
-		super(SZRecipes.SAWMILL, RecipeSerializer.STONECUTTING, id, group, input, output);
+		super(SZRecipes.SAWMILL, SZRecipes.SAWMILL_SERIALIZER, id, group, input, output);
 	}
 
 	@Override
