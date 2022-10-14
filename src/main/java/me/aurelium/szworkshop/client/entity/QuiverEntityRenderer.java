@@ -1,15 +1,14 @@
 package me.aurelium.szworkshop.client.entity;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import me.aurelium.szworkshop.client.model.QuiverEntityModel;
 import me.aurelium.szworkshop.entity.QuiverEntity;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class QuiverEntityRenderer extends GeoEntityRenderer<QuiverEntity> {

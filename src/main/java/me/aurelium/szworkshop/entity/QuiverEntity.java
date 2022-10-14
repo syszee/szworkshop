@@ -26,9 +26,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
+import net.minecraft.entity.projectile.ShulkerBulletEntity;
 import net.minecraft.inventory.SimpleInventory;
 import net.minecraft.item.ArrowItem;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
@@ -43,7 +45,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.random.RandomGenerator;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -55,6 +57,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import java.util.EnumSet;
+import java.util.random.RandomGenerator;
 
 public class QuiverEntity extends TameableEntity implements IAnimatable, RangedAttackMob, NamedScreenHandlerFactory {
 	private static final int ARROW_STAGE_1_COUNT = 1;
@@ -140,11 +143,11 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 
 		if(arrow != null) {
 			double d = target.getX() - this.getX();
-			double e = target.getBodyY(0.1f) - arrow.getY();
+			double e = target.getBodyY(1/32f) - arrow.getY();
 			double f = target.getZ() - this.getZ();
 			double g = Math.sqrt(d * d + f * f);
-			arrow.setPos(this.getX() + d * 0.1, this.getY() + 0.9f, this.getZ() + f * 0.1);
-			arrow.setVelocity(d, e + g * 0.2F, f, 3F, 0);
+			//arrow.setPos(this.getX() + d * 0.1, this.getY() + 0.9f, this.getZ() + f * 0.1);
+			arrow.setVelocity(d, e + g * 0.2F, f, 1.6F, 0);
 			this.playSound(SoundEvents.ENTITY_SKELETON_SHOOT, 1.0F, 1.0F / (this.getRandom().nextFloat() * 0.4F + 0.8F));
 			this.world.spawnEntity(arrow);
 		}
@@ -161,20 +164,20 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 	protected void initGoals() {
 		this.goalSelector.add(1, new SwimGoal(this));
 		this.goalSelector.add(2, new QuiverProjectileAttackGoal(this, 1.25, 0, 20, 10.0F));
-		this.goalSelector.add(3, new FollowOwnerNoTeleportGoal(this, 1f, 10f, 2f));
-		this.goalSelector.add(4, new WanderAroundFarGoal(this, 1.0));
-		this.goalSelector.add(5, new LookAroundGoal(this));
+		this.goalSelector.add(5, new FollowOwnerNoTeleportGoal(this, 1f, 10f, 2f));
+		this.goalSelector.add(8, new WanderAroundFarGoal(this, 1.0));
+		this.goalSelector.add(10, new LookAroundGoal(this));
 		//this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 8.0F));
 
 		this.targetSelector.add(1, new TrackOwnerAttackerGoal(this));
 		this.targetSelector.add(2, new RevengeGoal(this));
 		this.targetSelector.add(3, new AttackWithOwnerGoal(this));
-		this.targetSelector.add(4, new TargetGoal<>(this, MobEntity.class, 5, false, false, entity -> entity instanceof Monster && !(entity instanceof CreeperEntity)));
+		this.targetSelector.add(4, new ActiveTargetGoal<>(this, MobEntity.class, 5, false, false, entity -> entity instanceof Monster && !(entity instanceof CreeperEntity)));
 	}
 
 	public static DefaultAttributeContainer.Builder createMobAttributes() {
 		return MobEntity.createMobAttributes()
-				.add(EntityAttributes.GENERIC_MAX_HEALTH, 50f)
+				.add(EntityAttributes.GENERIC_MAX_HEALTH, 12f)
 				.add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f);
 	}
 
@@ -196,7 +199,7 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 		return count;
 	}
 
-	private int chooseSlotWithArrow(RandomGenerator random) {
+	private int chooseSlotWithArrow(Random random) {
 		int i = -1;
 		int j = 1;
 
@@ -383,7 +386,7 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 
 		@Override
 		public void tick() {
-			this.tameable.getLookControl().lookAt(this.owner, 10.0F, (float)this.tameable.getLookPitchSpeed());
+			this.tameable.getLookControl().lookAt(this.owner, 10.0F, (float)this.tameable.getMaxLookPitchChange());
 			if (--this.updateCountdownTicks <= 0) {
 				this.updateCountdownTicks = this.getTickCount(10);
 				if (!this.tameable.isLeashed() && !this.tameable.hasVehicle()) {
@@ -449,7 +452,7 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 		}
 
 		@Override
-		public boolean requiresUpdateEveryTick() {
+		public boolean shouldRunEveryTick() {
 			return true;
 		}
 
@@ -469,7 +472,8 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 				this.mob.getNavigation().startMovingTo(this.target, this.mobSpeed);
 			}
 
-			this.mob.getLookControl().lookAt(this.target, 30.0F, 30.0F);
+			this.mob.getLookControl().lookAt(this.target);
+			this.mob.lookAtEntity(this.target, 30f, 30f);
 			if (--this.updateCountdownTicks == 0) {
 				if (!bl) {
 					return;

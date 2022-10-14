@@ -1,0 +1,38 @@
+{
+	"schemaVersion": 1,
+	"id": "modid",
+	"version": "${version}",
+
+	"name": "SystemZee's Workshop",
+	"description": "A collection of the best of SystemZee.",
+	"authors": [
+		"SystemZee",
+		"Aurelium"
+	],
+
+	"license": "All Rights Reserved",
+	"icon": "assets/szworkshop/icon.png",
+
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"me.aurelium.szworkshop.SZWorkshop"
+		],
+		"client": [
+			"me.aurelium.szworkshop.client.SZWorkshopClient"
+		]
+	},
+	"mixins": [
+		"szworkshop.mixins.json"
+	],
+
+	"depends": {
+		"fabricloader": ">=0.14.9",
+		"fabric-api": "*",
+		"geckolib3": ">=3.1.22",
+		"minecraft": "~1.19",
+		"java": ">=17"
+	},
+	"suggests": {
+	}
+}
