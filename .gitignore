@@ -31,3 +31,4 @@ workspace/
 *.DS_Store
 
 /src/main/generated/**
+src/main/generated/.cache
