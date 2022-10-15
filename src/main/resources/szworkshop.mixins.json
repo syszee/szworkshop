@@ -8,6 +8,7 @@
     "EntityNavigationMixin"
   ],
   "client": [
+    "TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1
