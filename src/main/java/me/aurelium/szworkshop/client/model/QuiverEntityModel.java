@@ -13,7 +13,11 @@ public class QuiverEntityModel extends AnimatedGeoModel<QuiverEntity> {
 
 	@Override
 	public Identifier getTextureResource(QuiverEntity object) {
-		return new Identifier(SZWorkshop.MODID, "textures/entity/quiver.png");
+		if(object.isHoneyed()) {
+			return new Identifier(SZWorkshop.MODID, "textures/entity/quiver_honey.png");
+		} else {
+			return new Identifier(SZWorkshop.MODID, "textures/entity/quiver.png");
+		}
 	}
 
 	@Override

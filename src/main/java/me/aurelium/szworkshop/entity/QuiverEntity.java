@@ -1,6 +1,7 @@
 package me.aurelium.szworkshop.entity;
 
 import me.aurelium.szworkshop.SZWorkshop;
+import me.aurelium.szworkshop.sound.SZSoundEvents;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EntityType;
@@ -28,21 +29,25 @@ import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.entity.projectile.ShulkerBulletEntity;
 import net.minecraft.inventory.SimpleInventory;
-import net.minecraft.item.ArrowItem;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionUtil;
+import net.minecraft.potion.Potions;
 import net.minecraft.screen.Generic3x3ContainerScreenHandler;
 import net.minecraft.screen.NamedScreenHandlerFactory;
 import net.minecraft.screen.ScreenHandler;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
@@ -67,10 +72,25 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 	private final AnimationFactory factory = new AnimationFactory(this);
 	private final SimpleInventory inventory = new SimpleInventory(9);
 	private static final TrackedData<Integer> ARROWS = DataTracker.registerData(QuiverEntity.class, TrackedDataHandlerRegistry.INTEGER);
+	private static final TrackedData<Boolean> HONEYED = DataTracker.registerData(QuiverEntity.class, TrackedDataHandlerRegistry.BOOLEAN);
 
 	public QuiverEntity(EntityType<QuiverEntity> entityType, World world) {
 		super(entityType, world);
 		inventory.addListener(inv -> this.dataTracker.set(ARROWS, countArrows()));
+	}
+
+	// sound-related events
+
+	@Nullable
+	@Override
+	protected SoundEvent getHurtSound(DamageSource source) {
+		return SZSoundEvents.QUIVER_DAMAGE;
+	}
+
+	@Nullable
+	@Override
+	protected SoundEvent getDeathSound() {
+		return SZSoundEvents.QUIVER_DEATH;
 	}
 
 	// Behavior methods
@@ -130,8 +150,43 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 		if(!isTamed())
 			setOwner(player);
 
-		if(!player.world.isClient) {
-			player.openHandledScreen(this);
+		if(player.isSneaking())
+			return super.interactAt(player, hitPos, hand);
+
+		ItemStack stackInHand = player.getStackInHand(hand);
+
+		if(!isHoneyed() && stackInHand.getItem() == Items.HONEY_BOTTLE) {
+			if (!world.isClient) {
+				ServerWorld serverWorld = (ServerWorld)world;
+				for (int i = 0; i < 50; ++i) {
+					serverWorld.spawnParticles(ParticleTypes.LANDING_HONEY, this.getX() + (0.5-world.random.nextDouble()), this.getY()+1, this.getZ() + (0.5-world.random.nextDouble()), 1, 0.0, -1, 0.0, 1.0);
+				}
+			}
+			world.playSound(null, this.getBlockPos(), SoundEvents.BLOCK_HONEY_BLOCK_BREAK, SoundCategory.BLOCKS, 1.0f, 1.0f);
+
+			player.setStackInHand(hand, ItemUsage.exchangeStack(stackInHand, player, new ItemStack(Items.GLASS_BOTTLE)));
+			setHoneyed(true);
+		} else if(isHoneyed() && stackInHand.getItem() == Items.WATER_BUCKET) {
+			setHoneyed(false);
+			world.playSound(null, this.getBlockPos(), SoundEvents.ITEM_BUCKET_EMPTY, SoundCategory.BLOCKS, 1.0f, 1.0f);
+		} else if(isHoneyed() && stackInHand.getItem() == Items.POTION) {
+			if(PotionUtil.getPotion(stackInHand) == Potions.WATER) { // de-honey, most of this is taken from the "turn block into mud" code in PotionItem
+				if (!world.isClient) {
+					ServerWorld serverWorld = (ServerWorld)world;
+					for (int i = 0; i < 5; ++i) {
+						serverWorld.spawnParticles(ParticleTypes.SPLASH, this.getX() + world.random.nextDouble(), this.getY() + 1, this.getZ() + world.random.nextDouble(), 1, 0.0, 0.0, 0.0, 1.0);
+					}
+				}
+				world.playSound(null, this.getBlockPos(), SoundEvents.ITEM_BOTTLE_EMPTY, SoundCategory.BLOCKS, 1.0f, 1.0f);
+
+				player.setStackInHand(hand, ItemUsage.exchangeStack(stackInHand, player, new ItemStack(Items.GLASS_BOTTLE)));
+
+				setHoneyed(false);
+			}
+		} else {
+			if (!player.world.isClient) {
+				player.openHandledScreen(this);
+			}
 		}
 
 		return ActionResult.success(true);
@@ -185,6 +240,27 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 	protected void initDataTracker() {
 		super.initDataTracker();
 		this.dataTracker.startTracking(ARROWS, 0);
+		this.dataTracker.startTracking(HONEYED, false);
+	}
+
+	@Override
+	public void takeKnockback(double strength, double x, double z) { // I want it to appear stuck in place when honeyed.
+		if(!isHoneyed()) {
+			super.takeKnockback(strength, x, z);
+		}
+	}
+
+	public boolean isHoneyed() {
+		return this.dataTracker.get(HONEYED);
+	}
+
+	private void setHoneyed(boolean honeyed) {
+		if(honeyed) {
+			this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(0f);
+		} else {
+			this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED).setBaseValue(0.3f);
+		}
+		this.dataTracker.set(HONEYED, honeyed);
 	}
 
 	// Inventory-related methods
@@ -272,7 +348,7 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 
 		AnimationBuilder builder = new AnimationBuilder();
-		if(event.isMoving()) {
+		if(event.isMoving() && !isHoneyed()) {
 			builder.addAnimation("animation.quiver.walk_alt", true);
 		} else {
 			builder.addAnimation("animation.quiver.idle_alt", true);

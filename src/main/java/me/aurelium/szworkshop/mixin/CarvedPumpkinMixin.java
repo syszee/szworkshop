@@ -3,6 +3,7 @@ package me.aurelium.szworkshop.mixin;
 import me.aurelium.szworkshop.SZWorkshop;
 import me.aurelium.szworkshop.entity.QuiverEntity;
 import me.aurelium.szworkshop.entity.SZEntities;
+import me.aurelium.szworkshop.sound.SZSoundEvents;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -15,6 +16,8 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.SnowGolemEntity;
 import net.minecraft.predicate.block.BlockStatePredicate;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldEvents;
@@ -71,6 +74,8 @@ public class CarvedPumpkinMixin {
 				CachedBlockPosition cachedBlockPosition2 = result.translate(0, j, 0);
 				world.updateNeighbors(cachedBlockPosition2.getBlockPos(), Blocks.AIR);
 			}
+
+			world.playSound(null, blockPos, SZSoundEvents.QUIVER_CREATE, SoundCategory.BLOCKS, 1.0f, 1.0f);
 		}
 	}
 }

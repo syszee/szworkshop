@@ -3,6 +3,7 @@ package me.aurelium.szworkshop;
 import me.aurelium.szworkshop.block.SZBlocks;
 import me.aurelium.szworkshop.entity.SZEntities;
 import me.aurelium.szworkshop.recipe.SZRecipes;
+import me.aurelium.szworkshop.sound.SZSoundEvents;
 import me.aurelium.szworkshop.ui.screen.SZScreenHandlers;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
@@ -46,5 +47,6 @@ public class SZWorkshop implements ModInitializer {
 		SZEntities.initialize();
 		SZRecipes.initialize();
 		SZScreenHandlers.initialize();
+		SZSoundEvents.initialize();
 	}
 }

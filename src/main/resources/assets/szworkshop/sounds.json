@@ -1,0 +1,21 @@
+{
+  "quiver_create": {
+    "subtitle": "subtitles.szworkshop.quiver_create",
+    "sounds": [
+      "szworkshop:quiver_create"
+    ]
+  },
+  "quiver_damage": {
+    "subtitle": "subtitles.szworkshop.quiver_damage",
+    "sounds": [
+      "szworkshop:quiver_damage"
+    ]
+  },
+  "quiver_death": {
+    "subtitle": "subtitles.szworkshop.quiver_death",
+    "sounds": [
+      "szworkshop:quiver_death"
+    ]
+  }
+}
+
