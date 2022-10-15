@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 public class SawmillBlock extends Block {
 	private static final Text TITLE = Text.translatable("container.szworkshop.saw_mill");
 	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
-	protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 9.0, 0.0, 16.0, 10.0, 16.0);
+	protected static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 10.0, 16.0);
 
 	public SawmillBlock() {
 		super(Settings.of(Material.WOOD).sounds(BlockSoundGroup.WOOD).strength(1f).nonOpaque());
