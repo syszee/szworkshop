@@ -326,6 +326,8 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 		}
 
 		nbt.put("Inventory", nbtList);
+		nbt.putBoolean("Honeyed", isHoneyed());
+
 		super.writeCustomDataToNbt(nbt);
 	}
 
@@ -340,8 +342,12 @@ public class QuiverEntity extends TameableEntity implements IAnimatable, RangedA
 				this.inventory.setStack(j, ItemStack.fromNbt(nbtCompound));
 			}
 		}
+
+		setHoneyed(nbt.getBoolean("Honeyed"));
 		super.readCustomDataFromNbt(nbt);
 	}
+
+
 
 	// Animation methods
 
