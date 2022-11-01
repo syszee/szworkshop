@@ -2,6 +2,7 @@ package me.aurelium.szworkshop;
 
 import me.aurelium.szworkshop.block.SZBlocks;
 import me.aurelium.szworkshop.entity.SZEntities;
+import me.aurelium.szworkshop.item.SZItems;
 import me.aurelium.szworkshop.recipe.SZRecipes;
 import me.aurelium.szworkshop.sound.SZSoundEvents;
 import me.aurelium.szworkshop.ui.screen.SZScreenHandlers;
@@ -44,6 +45,7 @@ public class SZWorkshop implements ModInitializer {
 		sawmillRule = GameRuleRegistry.register("szwSawmill", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true, SZWorkshop::verifyWorldChanges));
 
 		SZBlocks.initialize();
+		SZItems.initialize();
 		SZEntities.initialize();
 		SZRecipes.initialize();
 		SZScreenHandlers.initialize();
