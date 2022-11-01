@@ -24,6 +24,8 @@ public abstract class FishingBobberEntityMixin extends ProjectileEntity {
 	@Final
 	private int lureLevel;
 
+	@Shadow
+	private int waitCountdown;
 	private boolean isEnhanced = false;
 
 	public FishingBobberEntityMixin(EntityType<? extends ProjectileEntity> entityType, World world) {
@@ -32,7 +34,7 @@ public abstract class FishingBobberEntityMixin extends ProjectileEntity {
 
 	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/world/World;II)V")
 	private void addGlowSquidBonus(CallbackInfo ci) {
-		int entityCount = world.getNonSpectatingEntities(GlowSquidEntity.class, this.getBoundingBox().expand(10)).size()*2;
+		int entityCount = world.getNonSpectatingEntities(GlowSquidEntity.class, this.getBoundingBox().expand(10)).size();
 		if(entityCount > 0) {
 			isEnhanced = true;
 		}
@@ -44,5 +46,8 @@ public abstract class FishingBobberEntityMixin extends ProjectileEntity {
 		if(!world.isClient && isEnhanced) {
 			((ServerWorld)world).spawnParticles(ParticleTypes.GLOW, getX(), getY(), getZ(), 1, random.nextFloat() * 0.2, (random.nextFloat() + 0.5) * 0.2, random.nextFloat() * 0.2, 0.5);
 		}
+
+		if(this.waitCountdown < 0)
+			this.waitCountdown = 50;
 	}
 }
