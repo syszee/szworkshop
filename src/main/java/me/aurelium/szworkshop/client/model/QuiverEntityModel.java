@@ -8,20 +8,20 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 public class QuiverEntityModel extends AnimatedGeoModel<QuiverEntity> {
 	@Override
 	public Identifier getModelResource(QuiverEntity object) {
-		return new Identifier(SZWorkshop.MODID, "geo/quiver.geo.json");
+		return SZWorkshop.id( "geo/quiver.geo.json");
 	}
 
 	@Override
 	public Identifier getTextureResource(QuiverEntity object) {
 		if(object.isHoneyed()) {
-			return new Identifier(SZWorkshop.MODID, "textures/entity/quiver_honey.png");
+			return SZWorkshop.id( "textures/entity/quiver_honey.png");
 		} else {
-			return new Identifier(SZWorkshop.MODID, "textures/entity/quiver.png");
+			return SZWorkshop.id( "textures/entity/quiver.png");
 		}
 	}
 
 	@Override
 	public Identifier getAnimationResource(QuiverEntity animatable) {
-		return new Identifier(SZWorkshop.MODID, "animations/quiver.animation.json");
+		return SZWorkshop.id( "animations/quiver.animation.json");
 	}
 }

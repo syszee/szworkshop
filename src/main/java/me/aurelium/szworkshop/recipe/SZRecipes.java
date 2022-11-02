@@ -12,8 +12,8 @@ public class SZRecipes {
 	public static RecipeType<SawmillRecipe> SAWMILL;
 
 	public static void initialize() {
-		SAWMILL_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, new Identifier(SZWorkshop.MODID, "saw_mill"), new CuttingRecipe.Serializer<>(SawmillRecipe::new));
-		SAWMILL = Registry.register(Registry.RECIPE_TYPE, new Identifier(SZWorkshop.MODID, "saw_mill"), new RecipeType<SawmillRecipe>() {
+		SAWMILL_SERIALIZER = Registry.register(Registry.RECIPE_SERIALIZER, SZWorkshop.id( "saw_mill"), new CuttingRecipe.Serializer<>(SawmillRecipe::new));
+		SAWMILL = Registry.register(Registry.RECIPE_TYPE, SZWorkshop.id( "saw_mill"), new RecipeType<SawmillRecipe>() {
 			public String toString() {
 				return "saw_mill";
 			}

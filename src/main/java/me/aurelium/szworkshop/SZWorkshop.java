@@ -7,11 +7,16 @@ import me.aurelium.szworkshop.recipe.SZRecipes;
 import me.aurelium.szworkshop.sound.SZSoundEvents;
 import me.aurelium.szworkshop.ui.screen.SZScreenHandlers;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.GameRules;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +30,12 @@ public class SZWorkshop implements ModInitializer {
 	public static GameRules.Key<GameRules.BooleanRule> understandRule;
 	public static GameRules.Key<GameRules.BooleanRule> quiverRule;
 	public static GameRules.Key<GameRules.BooleanRule> sawmillRule;
+
+	public static final ItemGroup SZ_GROUP = FabricItemGroupBuilder.build();
+
+	public static Identifier id(String name) {
+		return new Identifier(MODID, name);
+	}
 
 	private static void verifyWorldChanges(MinecraftServer server, GameRules.BooleanRule rule) {
 		if(!rule.get()) {

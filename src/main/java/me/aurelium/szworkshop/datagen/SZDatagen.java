@@ -56,7 +56,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Log -> Planks
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_planks"), "",
+								SZWorkshop.id( woodType + "_planks"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier(woodType + logName))),
 								new ItemStack(Registry.ITEM.get(new Identifier(woodType + "_planks")), 4)
 						)
@@ -65,7 +65,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Stripped Log -> Planks
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_planks_stripped"), "",
+								SZWorkshop.id( woodType + "_planks_stripped"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier("stripped_" + woodType + logName))),
 								new ItemStack(Registry.ITEM.get(new Identifier(woodType + "_planks")), 4)
 						)
@@ -74,7 +74,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Root -> Planks
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_root_planks"), "",
+								SZWorkshop.id( woodType + "_root_planks"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier(woodType + rootName))),
 								new ItemStack(Registry.ITEM.get(new Identifier(woodType + "_planks")), 4)
 						)
@@ -83,7 +83,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Stripped Root -> Planks
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_root_planks_stripped"), "",
+								SZWorkshop.id( woodType + "_root_planks_stripped"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier("stripped_" + woodType + rootName))),
 								new ItemStack(Registry.ITEM.get(new Identifier(woodType + "_planks")), 4)
 						)
@@ -92,7 +92,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Log -> Root
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_root"), "",
+								SZWorkshop.id( woodType + "_root"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier(woodType + logName))),
 								new ItemStack(Registry.ITEM.get(new Identifier(woodType + rootName)), 1)
 						)
@@ -101,7 +101,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Root -> Log
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_log"), "",
+								SZWorkshop.id( woodType + "_log"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier(woodType + rootName))),
 								new ItemStack(Registry.ITEM.get(new Identifier(woodType + logName)), 1)
 						)
@@ -110,7 +110,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Stripped Log -> Stripped Root
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_root_stripped"), "",
+								SZWorkshop.id( woodType + "_root_stripped"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier("stripped_" + woodType + logName))),
 								new ItemStack(Registry.ITEM.get(new Identifier("stripped_" + woodType + rootName)), 1)
 						)
@@ -119,7 +119,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Stripped Root -> Stripped Log
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_log_stripped"), "",
+								SZWorkshop.id( woodType + "_log_stripped"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier("stripped_" + woodType + rootName))),
 								new ItemStack(Registry.ITEM.get(new Identifier("stripped_" + woodType + logName)), 1)
 						)
@@ -128,7 +128,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Log -> Stripped Log
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_log_stripping"), "",
+								SZWorkshop.id( woodType + "_log_stripping"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier(woodType + logName))),
 								new ItemStack(Registry.ITEM.get(new Identifier("stripped_" + woodType + logName)), 1)
 						)
@@ -137,7 +137,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Root -> Stripped Root
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_root_stripping"), "",
+								SZWorkshop.id( woodType + "_root_stripping"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier(woodType + rootName))),
 								new ItemStack(Registry.ITEM.get(new Identifier("stripped_" + woodType + rootName)), 1)
 						)
@@ -146,7 +146,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Planks -> Stairs
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_stairs"), "",
+								SZWorkshop.id( woodType + "_stairs"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier(woodType + "_planks"))),
 								new ItemStack(Registry.ITEM.get(new Identifier(woodType + "_stairs")), 1)
 						)
@@ -155,7 +155,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Planks -> Slabs
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_slab"), "",
+								SZWorkshop.id( woodType + "_slab"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier(woodType + "_planks"))),
 								new ItemStack(Registry.ITEM.get(new Identifier(woodType + "_slab")), 2)
 						)
@@ -164,7 +164,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Planks -> Fence
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_fence"), "",
+								SZWorkshop.id( woodType + "_fence"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier(woodType + "_planks"))),
 								new ItemStack(Registry.ITEM.get(new Identifier(woodType + "_fence")), 1)
 						)
@@ -173,7 +173,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Planks -> Fence Gate
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_fence_gate"), "",
+								SZWorkshop.id( woodType + "_fence_gate"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier(woodType + "_planks"))),
 								new ItemStack(Registry.ITEM.get(new Identifier(woodType + "_fence_gate")), 1)
 						)
@@ -182,7 +182,7 @@ public class SZDatagen implements DataGeneratorEntrypoint {
 				// Planks -> Sign
 				exporter.accept(new SawmillRecipeJsonProvider(
 						new SawmillRecipe(
-								new Identifier(SZWorkshop.MODID, woodType + "_sign"), "",
+								SZWorkshop.id( woodType + "_sign"), "",
 								Ingredient.ofItems(Registry.ITEM.get(new Identifier(woodType + "_planks"))),
 								new ItemStack(Registry.ITEM.get(new Identifier(woodType + "_sign")), 1)
 						)

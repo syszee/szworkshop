@@ -9,6 +9,6 @@ public class SZScreenHandlers {
 	public static ScreenHandlerType<SawmillScreenHandler> SAWMILL_SCREEN_HANDLER;
 
 	public static void initialize() {
-		SAWMILL_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, new Identifier(SZWorkshop.MODID, "saw_mill"), new ScreenHandlerType<>(SawmillScreenHandler::new));
+		SAWMILL_SCREEN_HANDLER = Registry.register(Registry.SCREEN_HANDLER, SZWorkshop.id( "saw_mill"), new ScreenHandlerType<>(SawmillScreenHandler::new));
 	}
 }

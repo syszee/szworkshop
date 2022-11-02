@@ -12,7 +12,7 @@ import net.minecraft.util.registry.Registry;
 public class SZEntities {
 	public static final EntityType<QuiverEntity> QUIVER = Registry.register(
 			Registry.ENTITY_TYPE,
-			new Identifier(SZWorkshop.MODID, "quiver"),
+			SZWorkshop.id( "quiver"),
 			FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, QuiverEntity::new).dimensions(EntityDimensions.fixed(1f, 1.5f)).build()
 	);
 

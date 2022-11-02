@@ -6,9 +6,9 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class SZSoundEvents {
-	public static SoundEvent QUIVER_CREATE = new SoundEvent(new Identifier(SZWorkshop.MODID, "quiver_create"));
-	public static SoundEvent QUIVER_DAMAGE = new SoundEvent(new Identifier(SZWorkshop.MODID, "quiver_damage"));
-	public static SoundEvent QUIVER_DEATH = new SoundEvent(new Identifier(SZWorkshop.MODID, "quiver_death"));
+	public static SoundEvent QUIVER_CREATE = new SoundEvent(SZWorkshop.id( "quiver_create"));
+	public static SoundEvent QUIVER_DAMAGE = new SoundEvent(SZWorkshop.id( "quiver_damage"));
+	public static SoundEvent QUIVER_DEATH = new SoundEvent(SZWorkshop.id( "quiver_death"));
 
 	public static void initialize() {
 		Registry.register(Registry.SOUND_EVENT, QUIVER_CREATE.getId(), QUIVER_CREATE);

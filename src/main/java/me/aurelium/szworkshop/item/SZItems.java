@@ -13,7 +13,7 @@ import net.minecraft.util.registry.Registry;
 
 public class SZItems {
 	public static Item GLOW_SQUID_BUCKET = Registry.register(Registry.ITEM,
-		new Identifier(SZWorkshop.MODID, "glow_squid_bucket"),
+		SZWorkshop.id( "glow_squid_bucket"),
 		new EntityBucketItem(EntityType.GLOW_SQUID, Fluids.WATER, SoundEvents.ITEM_BUCKET_EMPTY_FISH, new FabricItemSettings().maxCount(1).group(ItemGroup.MISC))
 	);
 
