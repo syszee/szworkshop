@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "gravel=0": {
+      "model": "szworkshop:sifter_0"
+    },
+    "gravel=1": {
+      "model": "szworkshop:sifter_1"
+    },
+    "gravel=2": {
+      "model": "szworkshop:sifter_2"
+    },
+    "gravel=3": {
+      "model": "szworkshop:sifter_3"
+    },
+    "gravel=4": {
+      "model": "szworkshop:sifter_4"
+    }
+  }
+}
