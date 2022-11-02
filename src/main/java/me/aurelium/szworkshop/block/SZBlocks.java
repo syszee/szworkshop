@@ -19,12 +19,12 @@ public class SZBlocks {
 		if(creativeTab) {
 			settings.group(ItemGroup.MISC);
 		}
-		Registry.register(Registry.ITEM, new Identifier(SZWorkshop.MODID, id), new BlockItem(block, new FabricItemSettings().group(ItemGr)));
+		Registry.register(Registry.ITEM, new Identifier(SZWorkshop.MODID, id), new BlockItem(block, new FabricItemSettings().group(SZWorkshop.SZ_GROUP)));
 		return block;
 	}
 
 	public static void initialize() {
-		SAWMILL = register(new SawmillBlock(), "saw_mill");
-		SIFTER = register(new SifterBlock(), "sifter");
+		SAWMILL = register(new SawmillBlock(), "saw_mill", true);
+		SIFTER = register(new SifterBlock(), "sifter", true);
 	}
 }

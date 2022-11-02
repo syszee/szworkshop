@@ -31,7 +31,7 @@ public class SZWorkshop implements ModInitializer {
 	public static GameRules.Key<GameRules.BooleanRule> quiverRule;
 	public static GameRules.Key<GameRules.BooleanRule> sawmillRule;
 
-	public static final ItemGroup SZ_GROUP = FabricItemGroupBuilder.build();
+	public static final ItemGroup SZ_GROUP = FabricItemGroupBuilder.create(id("main")).build();
 
 	public static Identifier id(String name) {
 		return new Identifier(MODID, name);
