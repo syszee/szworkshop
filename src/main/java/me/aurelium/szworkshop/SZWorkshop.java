@@ -12,6 +12,7 @@ import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -31,7 +32,7 @@ public class SZWorkshop implements ModInitializer {
 	public static GameRules.Key<GameRules.BooleanRule> sifterRule;
 	public static GameRules.Key<GameRules.BooleanRule> glowsquidFishingRule;
 
-	public static final ItemGroup SZ_GROUP = FabricItemGroupBuilder.create(id("main")).build();
+	public static final ItemGroup SZ_GROUP = FabricItemGroupBuilder.create(id("main")).icon(() -> new ItemStack(SZBlocks.SIFTER)).build();
 
 	public static Identifier id(String name) {
 		return new Identifier(MODID, name);

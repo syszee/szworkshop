@@ -9,5 +9,8 @@
   "block.szworkshop.saw_mill": "Sawmill",
   "block.szworkshop.saw_mill.disabled": "This block has been disabled by your server administrator. To use this block, enable the 'szwSawmill' game rule.",
   "block.szworkshop.sifter": "Sifter",
-  "block.szworkshop.sifter.disabled": "This block has been disabled by your server administrator. To use this block, enable the 'szwSifter' game rule."
+  "block.szworkshop.sifter.disabled": "This block has been disabled by your server administrator. To use this block, enable the 'szwSifter' game rule.",
+
+  "item.szworkshop.glow_squid_bucket": "Bucket of Glow Squid",
+  "itemGroup.szworkshop.main": "SystemZee's Workshop"
 }

@@ -20,5 +20,6 @@ public class SZWorkshopClient implements ClientModInitializer {
 		HandledScreens.register(SZScreenHandlers.SAWMILL_SCREEN_HANDLER, SawmillScreen::new);
 
 		BlockRenderLayerMap.INSTANCE.putBlock(SZBlocks.SAWMILL, RenderLayer.getCutout());
+		BlockRenderLayerMap.INSTANCE.putBlock(SZBlocks.SIFTER, RenderLayer.getCutout());
 	}
 }
