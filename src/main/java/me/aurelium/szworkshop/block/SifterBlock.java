@@ -12,6 +12,8 @@ import net.minecraft.loot.context.LootContextType;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.text.Text;
@@ -71,14 +73,14 @@ public class SifterBlock extends Block {
 
 				ItemScatterer.spawn(world, pos.up(), defaultedStacks);
 
-				return ActionResult.success(world.isClient);
+				world.playSound(null, pos, SoundEvents.BLOCK_GRAVEL_PLACE, SoundCategory.BLOCKS, 1.0f, 1.0f);
 			}
 		} else {
 			world.setBlockState(pos, state.with(GRAVEL_AMOUNT, gravelAmount-1));
-			return ActionResult.success(world.isClient);
+			world.playSound(null, pos, SoundEvents.BLOCK_GRAVEL_PLACE, SoundCategory.BLOCKS, 1.0f, 1.0f);
 		}
 
-		return super.onUse(state, world, pos, player, hand, hit);
+		return ActionResult.SUCCESS;
 	}
 
 	@Override
