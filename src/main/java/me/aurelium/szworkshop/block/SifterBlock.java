@@ -73,7 +73,7 @@ public class SifterBlock extends Block {
 
 				ItemScatterer.spawn(world, pos.up(), defaultedStacks);
 
-				world.playSound(null, pos, SoundEvents.BLOCK_GRAVEL_PLACE, SoundCategory.BLOCKS, 1.0f, 1.0f);
+				world.playSound(null, pos, SoundEvents.BLOCK_GRAVEL_PLACE, SoundCategory.BLOCKS, 1.0f, 1.0f + world.random.nextFloat()*0.1f);
 			}
 		} else {
 			world.setBlockState(pos, state.with(GRAVEL_AMOUNT, gravelAmount-1));
