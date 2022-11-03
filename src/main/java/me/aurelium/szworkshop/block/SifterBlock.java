@@ -14,6 +14,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ItemScatterer;
@@ -38,6 +39,14 @@ public class SifterBlock extends Block {
 
 	@Override
 	public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+		if(world.isClient)
+			return ActionResult.SUCCESS;
+
+		if(!((ServerWorld)world).getServer().getGameRules().getBoolean(SZWorkshop.sifterRule)) {
+			player.sendMessage(Text.translatable("block.szworkshop.sifter.disabled"), true);
+			return ActionResult.SUCCESS;
+		}
+
 		int gravelAmount = state.get(GRAVEL_AMOUNT);
 
 		if(gravelAmount == 0) {
@@ -47,22 +56,20 @@ public class SifterBlock extends Block {
 				stackInHand.decrement(1);
 				world.setBlockState(pos, state.with(GRAVEL_AMOUNT, 4));
 
-				if(!world.isClient) {
-					LootTable table = world.getServer().getLootManager().getTable(SZWorkshop.id("sifter"));
+				LootTable table = world.getServer().getLootManager().getTable(SZWorkshop.id("sifter"));
 
-					// this is just the easiest and most applicable loot table type for this - making a custom one would be very annoying
-					List<ItemStack> stacks = table.generateLoot(
-						new LootContext.Builder((ServerWorld) world)
-							.parameter(LootContextParameters.ORIGIN, new Vec3d(pos.getX(), pos.getY(), pos.getZ()))
-							.parameter(LootContextParameters.BLOCK_STATE, state)
-							.parameter(LootContextParameters.TOOL, ItemStack.EMPTY)
-							.build(LootContextTypes.BLOCK)
-					);
+				// this is just the easiest and most applicable loot table type for this - making a custom one would be very annoying
+				List<ItemStack> stacks = table.generateLoot(
+					new LootContext.Builder((ServerWorld) world)
+						.parameter(LootContextParameters.ORIGIN, new Vec3d(pos.getX(), pos.getY(), pos.getZ()))
+						.parameter(LootContextParameters.BLOCK_STATE, state)
+						.parameter(LootContextParameters.TOOL, ItemStack.EMPTY)
+						.build(LootContextTypes.BLOCK)
+				);
 
-					DefaultedList<ItemStack> defaultedStacks = DefaultedList.copyOf(ItemStack.EMPTY, stacks.toArray(new ItemStack[0]));
+				DefaultedList<ItemStack> defaultedStacks = DefaultedList.copyOf(ItemStack.EMPTY, stacks.toArray(new ItemStack[0]));
 
-					ItemScatterer.spawn(world, pos.up(), defaultedStacks);
-				}
+				ItemScatterer.spawn(world, pos.up(), defaultedStacks);
 
 				return ActionResult.success(world.isClient);
 			}
