@@ -1,5 +1,6 @@
 package me.aurelium.szworkshop.mixin;
 
+import me.aurelium.szworkshop.SZWorkshop;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.GlowSquidEntity;
 import net.minecraft.entity.projectile.FishingBobberEntity;
@@ -34,11 +35,15 @@ public abstract class FishingBobberEntityMixin extends ProjectileEntity {
 
 	@Inject(at = @At("TAIL"), method = "<init>(Lnet/minecraft/entity/player/PlayerEntity;Lnet/minecraft/world/World;II)V")
 	private void addGlowSquidBonus(CallbackInfo ci) {
-		int entityCount = world.getNonSpectatingEntities(GlowSquidEntity.class, this.getBoundingBox().expand(10)).size();
-		if(entityCount > 0) {
-			isEnhanced = true;
+		if(!world.isClient) {
+			if(((ServerWorld)world).getServer().getGameRules().getBoolean(SZWorkshop.glowsquidFishingRule)) {
+				int entityCount = world.getNonSpectatingEntities(GlowSquidEntity.class, this.getBoundingBox().expand(10)).size();
+				if (entityCount > 0) {
+					isEnhanced = true;
+				}
+				lureLevel += entityCount;
+			}
 		}
-		lureLevel += entityCount;
 	}
 
 	@Inject(at = @At("TAIL"), method = "tickFishingLogic")

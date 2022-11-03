@@ -10,13 +10,11 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
-import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.GameRules;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +28,8 @@ public class SZWorkshop implements ModInitializer {
 	public static GameRules.Key<GameRules.BooleanRule> understandRule;
 	public static GameRules.Key<GameRules.BooleanRule> quiverRule;
 	public static GameRules.Key<GameRules.BooleanRule> sawmillRule;
+	public static GameRules.Key<GameRules.BooleanRule> sifterRule;
+	public static GameRules.Key<GameRules.BooleanRule> glowsquidFishingRule;
 
 	public static final ItemGroup SZ_GROUP = FabricItemGroupBuilder.create(id("main")).build();
 
@@ -54,6 +54,8 @@ public class SZWorkshop implements ModInitializer {
 
 		quiverRule = GameRuleRegistry.register("szwQuiver", GameRules.Category.MOBS, GameRuleFactory.createBooleanRule(true, SZWorkshop::verifyWorldChanges));
 		sawmillRule = GameRuleRegistry.register("szwSawmill", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true, SZWorkshop::verifyWorldChanges));
+		sifterRule = GameRuleRegistry.register("szwSifter", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true, SZWorkshop::verifyWorldChanges));
+		glowsquidFishingRule = GameRuleRegistry.register("szwGlowsquidFishing", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
 
 		SZBlocks.initialize();
 		SZItems.initialize();
