@@ -1,10 +1,7 @@
 package me.aurelium.szworkshop.block;
 
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.Material;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.state.StateManager;
@@ -13,10 +10,14 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class SifterBlock extends Block {
 	public static final IntProperty GRAVEL_AMOUNT = IntProperty.of("gravel", 0, 4);
+
+	private static final VoxelShape SHAPE = Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 12.0, 16.0);
 
 	public SifterBlock() {
 		super(FabricBlockSettings.of(Material.WOOD).nonOpaque().strength(2f));
@@ -31,6 +32,7 @@ public class SifterBlock extends Block {
 
 			if(stackInHand.isItemEqual(new ItemStack(Blocks.GRAVEL))) {
 				stackInHand.decrement(1);
+				world.setBlockState(pos, state.with(GRAVEL_AMOUNT, 4));
 				return ActionResult.success(world.isClient);
 			}
 		} else {
@@ -39,6 +41,11 @@ public class SifterBlock extends Block {
 		}
 
 		return super.onUse(state, world, pos, player, hand, hit);
+	}
+
+	@Override
+	public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+		return SHAPE;
 	}
 
 	@Override
