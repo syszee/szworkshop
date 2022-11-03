@@ -28,6 +28,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
+// A lot of the strangeness of this class can be explained by it being a slightly-cleaned-up copy of the decomp'd Stonecutter class
 public class SawmillBlock extends Block {
 	private static final Text TITLE = Text.translatable("container.szworkshop.saw_mill");
 	public static final DirectionProperty FACING = HorizontalFacingBlock.FACING;
@@ -79,8 +80,6 @@ public class SawmillBlock extends Block {
 	public BlockRenderType getRenderType(BlockState state) {
 		return BlockRenderType.MODEL;
 	}
-
-
 
 	public BlockState rotate(BlockState state, BlockRotation rotation) {
 		return state.with(FACING, rotation.rotate(state.get(FACING)));
