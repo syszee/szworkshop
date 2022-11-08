@@ -1,6 +1,7 @@
 package me.aurelium.szworkshop;
 
 import me.aurelium.szworkshop.block.SZBlocks;
+import me.aurelium.szworkshop.enchantments.SZEnchantments;
 import me.aurelium.szworkshop.entity.SZEntities;
 import me.aurelium.szworkshop.item.SZItems;
 import me.aurelium.szworkshop.recipe.SZRecipes;
@@ -10,9 +11,21 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTables;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.entry.ItemEntry;
+import net.minecraft.loot.function.LootFunction;
+import net.minecraft.loot.function.SetEnchantmentsLootFunction;
+import net.minecraft.loot.provider.number.LootNumberProvider;
+import net.minecraft.loot.provider.number.LootNumberProviderType;
+import net.minecraft.loot.provider.number.LootNumberProviderTypes;
+import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -31,6 +44,7 @@ public class SZWorkshop implements ModInitializer {
 	public static GameRules.Key<GameRules.BooleanRule> sawmillRule;
 	public static GameRules.Key<GameRules.BooleanRule> sifterRule;
 	public static GameRules.Key<GameRules.BooleanRule> glowsquidFishingRule;
+	public static GameRules.Key<GameRules.BooleanRule> stompingEnchantmentRule;
 
 	public static final ItemGroup SZ_GROUP = FabricItemGroupBuilder.create(id("main")).icon(() -> new ItemStack(SZBlocks.SIFTER)).build();
 
@@ -57,6 +71,17 @@ public class SZWorkshop implements ModInitializer {
 		sawmillRule = GameRuleRegistry.register("szwSawmill", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true, SZWorkshop::verifyWorldChanges));
 		sifterRule = GameRuleRegistry.register("szwSifter", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true, SZWorkshop::verifyWorldChanges));
 		glowsquidFishingRule = GameRuleRegistry.register("szwGlowsquidFishing", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
+		stompingEnchantmentRule = GameRuleRegistry.register("szwStomping", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
+
+		LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
+			// Add Stomping enchantment to mineshaft chests.
+			if (source.isBuiltin() && LootTables.ABANDONED_MINESHAFT_CHEST.equals(id)) {
+				LootPool.Builder poolBuilder = LootPool.builder()
+					.with(ItemEntry.builder(Items.ENCHANTED_BOOK).apply(new SetEnchantmentsLootFunction.Builder().enchantment(SZEnchantments.STOMPING, UniformLootNumberProvider.create(1, 1))));
+
+				tableBuilder.pool(poolBuilder);
+			}
+		});
 
 		SZBlocks.initialize();
 		SZItems.initialize();
@@ -64,5 +89,6 @@ public class SZWorkshop implements ModInitializer {
 		SZRecipes.initialize();
 		SZScreenHandlers.initialize();
 		SZSoundEvents.initialize();
+		SZEnchantments.initialize();
 	}
 }

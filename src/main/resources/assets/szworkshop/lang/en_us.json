@@ -12,5 +12,7 @@
   "block.szworkshop.sifter.disabled": "This block has been disabled by your server administrator. To use this block, enable the 'szwSifter' game rule.",
 
   "item.szworkshop.glow_squid_bucket": "Bucket of Glow Squid",
-  "itemGroup.szworkshop.main": "SystemZee's Workshop"
+  "itemGroup.szworkshop.main": "SystemZee's Workshop",
+
+  "enchantment.szworkshop.stomping": "Stomping"
 }

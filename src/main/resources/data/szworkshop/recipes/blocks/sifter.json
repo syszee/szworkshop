@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "C": {
+      "item": "minecraft:cobweb"
+    },
+    "F": {
+      "tag": "minecraft:wooden_fences"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    }
+  },
+  "pattern": [
+    "   ",
+    "SCS",
+    "FIF"
+  ],
+  "result": {
+    "item": "szworkshop:saw_mill"
+  }
+}
