@@ -45,7 +45,6 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 					ci.setReturnValue(false);
 				}
 			}
-
 		}
 	}
 }
