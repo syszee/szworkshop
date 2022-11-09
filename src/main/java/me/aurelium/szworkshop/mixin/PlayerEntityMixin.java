@@ -8,6 +8,9 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.DustParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.MathHelper;
@@ -42,6 +45,21 @@ public abstract class PlayerEntityMixin extends LivingEntity {
 				List<Entity> otherEntities = this.world.getOtherEntities(this, this.getBoundingBox().expand(1.1), predicate);
 				if (otherEntities.size() > 0) {
 					otherEntities.forEach(entity -> entity.damage(damageSource2, f));
+					if(!world.isClient) {
+						for(int pI=0; pI < 50; pI++) {
+							((ServerWorld) world).spawnParticles(
+								new BlockStateParticleEffect(ParticleTypes.BLOCK, world.getBlockState(getBlockPos().down())),
+								getX() + 2*(world.random.nextFloat() - 0.5),
+								getY(),
+								getZ() + 2*(world.random.nextFloat() - 0.5),
+								10,
+								0,
+								Math.abs(world.random.nextFloat() * 0.5),
+								0,
+								600
+							);
+						}
+					}
 					ci.setReturnValue(false);
 				}
 			}
