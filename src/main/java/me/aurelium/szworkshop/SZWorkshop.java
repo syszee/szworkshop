@@ -12,7 +12,10 @@ import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.EnchantedBookItem;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -46,7 +49,11 @@ public class SZWorkshop implements ModInitializer {
 	public static GameRules.Key<GameRules.BooleanRule> glowsquidFishingRule;
 	public static GameRules.Key<GameRules.BooleanRule> stompingEnchantmentRule;
 
-	public static final ItemGroup SZ_GROUP = FabricItemGroupBuilder.create(id("main")).icon(() -> new ItemStack(SZBlocks.SIFTER)).build();
+	public static final ItemGroup SZ_GROUP = FabricItemGroupBuilder.create(id("main")).icon(() -> new ItemStack(SZBlocks.SIFTER)).appendItems(stacks -> {
+		stacks.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(SZEnchantments.STOMPING, 1)));
+		stacks.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(SZEnchantments.STOMPING, 2)));
+		stacks.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(SZEnchantments.STOMPING, 3)));
+	}).build();
 
 	public static Identifier id(String name) {
 		return new Identifier(MODID, name);
