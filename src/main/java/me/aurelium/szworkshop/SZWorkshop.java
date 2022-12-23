@@ -53,6 +53,9 @@ public class SZWorkshop implements ModInitializer {
 		stacks.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(SZEnchantments.STOMPING, 1)));
 		stacks.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(SZEnchantments.STOMPING, 2)));
 		stacks.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(SZEnchantments.STOMPING, 3)));
+		stacks.add(new ItemStack(SZItems.GLOW_SQUID_BUCKET));
+		stacks.add(new ItemStack(SZBlocks.SIFTER));
+		stacks.add(new ItemStack(SZBlocks.SAWMILL));
 	}).build();
 
 	public static Identifier id(String name) {
