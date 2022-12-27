@@ -98,7 +98,7 @@ public abstract class FishingBobberEntityMixin extends ProjectileEntity {
 	@Inject(method = "use", at = @At(value = "INVOKE", target ="Lnet/minecraft/entity/ExperienceOrbEntity;<init>(Lnet/minecraft/world/World;DDDI)V"))
 	private void multiCatch(ItemStack usedItem, CallbackInfoReturnable<Integer> cir){
 		int multicatchLevel = EnchantmentHelper.getEquipmentLevel(SZEnchantments.MULTICATCH, this.getPlayerOwner());
-		int chance = random.nextInt(8);
+		int chance = random.nextInt(7);
 		if(multicatchLevel > 0 && chance == 1 && world.getGameRules().getBoolean(SZWorkshop.multicatchEnchantmentRule)){
 			int luckOfTheSeaLevel = EnchantmentHelper.getEquipmentLevel(Enchantments.LUCK_OF_THE_SEA, this.getPlayerOwner());
 
