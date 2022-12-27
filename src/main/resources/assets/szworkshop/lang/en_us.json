@@ -14,5 +14,7 @@
   "item.szworkshop.glow_squid_bucket": "Bucket of Glow Squid",
   "itemGroup.szworkshop.main": "SystemZee's Workshop",
 
-  "enchantment.szworkshop.stomping": "Stomping"
+  "enchantment.szworkshop.stomping": "Stomping",
+  "enchantment.szworkshop.orb_angler": "Orb Angler",
+  "enchantment.szworkshop.multicatch": "Multicatch"
 }

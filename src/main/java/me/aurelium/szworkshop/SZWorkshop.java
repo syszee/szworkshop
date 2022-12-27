@@ -15,10 +15,7 @@ import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.enchantment.EnchantmentLevelEntry;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnchantedBookItem;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraft.item.*;
 import net.minecraft.loot.LootPool;
 import net.minecraft.loot.LootTables;
 import net.minecraft.loot.context.LootContext;
@@ -32,6 +29,7 @@ import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.village.VillagerProfession;
 import net.minecraft.world.GameRules;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,11 +46,15 @@ public class SZWorkshop implements ModInitializer {
 	public static GameRules.Key<GameRules.BooleanRule> sifterRule;
 	public static GameRules.Key<GameRules.BooleanRule> glowsquidFishingRule;
 	public static GameRules.Key<GameRules.BooleanRule> stompingEnchantmentRule;
+	public static GameRules.Key<GameRules.BooleanRule> orbanglerEnchantmentRule;
+	public static GameRules.Key<GameRules.BooleanRule> multicatchEnchantmentRule;
 
 	public static final ItemGroup SZ_GROUP = FabricItemGroupBuilder.create(id("main")).icon(() -> new ItemStack(SZBlocks.SIFTER)).appendItems(stacks -> {
 		stacks.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(SZEnchantments.STOMPING, 1)));
 		stacks.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(SZEnchantments.STOMPING, 2)));
 		stacks.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(SZEnchantments.STOMPING, 3)));
+		stacks.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(SZEnchantments.ORB_ANGLER, 1)));
+		stacks.add(EnchantedBookItem.forEnchantment(new EnchantmentLevelEntry(SZEnchantments.MULTICATCH, 1)));
 		stacks.add(new ItemStack(SZItems.GLOW_SQUID_BUCKET));
 		stacks.add(new ItemStack(SZBlocks.SIFTER));
 		stacks.add(new ItemStack(SZBlocks.SAWMILL));
@@ -82,6 +84,8 @@ public class SZWorkshop implements ModInitializer {
 		sifterRule = GameRuleRegistry.register("szwSifter", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true, SZWorkshop::verifyWorldChanges));
 		glowsquidFishingRule = GameRuleRegistry.register("szwGlowsquidFishing", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
 		stompingEnchantmentRule = GameRuleRegistry.register("szwStomping", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
+		orbanglerEnchantmentRule = GameRuleRegistry.register("szwOrbAngler", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
+		multicatchEnchantmentRule = GameRuleRegistry.register("szwMulticatch", GameRules.Category.MISC, GameRuleFactory.createBooleanRule(true));
 
 		LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
 			// Add Stomping enchantment to mineshaft chests.
@@ -91,6 +95,18 @@ public class SZWorkshop implements ModInitializer {
 
 				tableBuilder.pool(poolBuilder);
 			}
+
+			// Add enchantments to shipwreck chests.
+			if (source.isBuiltin() && LootTables.SHIPWRECK_TREASURE_CHEST.equals(id)) {
+				LootPool.Builder poolBuilder = LootPool.builder();
+					poolBuilder.with(ItemEntry.builder(Items.ENCHANTED_BOOK).apply(new SetEnchantmentsLootFunction.Builder().enchantment(SZEnchantments.ORB_ANGLER, UniformLootNumberProvider.create(1, 1))));
+					poolBuilder.with(ItemEntry.builder(Items.ENCHANTED_BOOK).apply(new SetEnchantmentsLootFunction.Builder().enchantment(SZEnchantments.MULTICATCH, UniformLootNumberProvider.create(1, 1))));
+
+				tableBuilder.pool(poolBuilder);
+			}
+
+
+
 		});
 
 		SZBlocks.initialize();
