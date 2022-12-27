@@ -6,7 +6,7 @@
       "entries": [
         {
           "type": "minecraft:empty",
-          "weight": 70
+          "weight": 50
         },
         {
           "type": "minecraft:item",
@@ -22,7 +22,7 @@
             }
           ],
           "name": "minecraft:flint",
-          "weight": 15
+          "weight": 20
         },
         {
           "type": "minecraft:item",
@@ -38,7 +38,7 @@
             }
           ],
           "name": "minecraft:coal",
-          "weight": 10
+          "weight": 20
         },
         {
           "type": "minecraft:item",
@@ -54,7 +54,7 @@
             }
           ],
           "name": "minecraft:iron_nugget",
-          "weight": 5
+          "weight": 10
         }
       ],
       "rolls": 1.0
